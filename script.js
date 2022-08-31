@@ -5,7 +5,7 @@ createTitle.innerHTML = 'Paleta de Cores';
 createTitle.id = 'title';
 positionBody.appendChild(createTitle);
 
-//Exercicio 2
+//Exercicio 2 e Exercicio 3
 
 const title = document.querySelector('#title');
 
@@ -15,7 +15,7 @@ function colorPalette() {
   positionBody.appendChild(createColor);
   positionCreaterColor = document.getElementById('color-palette');
 
-  const cores = ['red', 'green', 'black', 'yellow'];
+  const cores = ['black', 'green', 'red', 'yellow'];
 
   for (let index = 0; index < cores.length; index += 1) {
     const square = document.createElement('class');
@@ -26,3 +26,5 @@ function colorPalette() {
   }
 }
 colorPalette();
+
+//Exercico 4
