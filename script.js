@@ -5,14 +5,10 @@ function createHTML(tag, text, elemento) {
   positionBody.appendChild(create);
   create.innerText = text;
   create.id = elemento;
-  create.style.width = '230px';
-  create.style.height = '80px';
-
 }
 createHTML('h1', 'Paleta de Cores', 'title');
 createHTML('id', '', 'color-palette');
 createHTML('button', 'Cores aleatórias', 'button-random-color');
-createHTML('div', '', 'pixel-board');
 
 const positionCreaterColor = document.getElementById('color-palette');
 
@@ -29,10 +25,10 @@ function generateColor() {
 function createClassColorHtmlCss(tipo) {
   const create = document.createElement('class');
   positionCreaterColor.appendChild(create);
-  create.className = tipo;
+  create.classList = tipo;
   create.style.border = 'solid black 1px';
-  create.style.width = '80px';
-  create.style.height = '80px';
+  create.style.width = '40px';
+  create.style.height = '40px';
   create.style.display = 'inLine-block';
   create.style.margin = '2px';
 }
@@ -69,6 +65,12 @@ positionButton.addEventListener('click', function newCollor() {
     window.location.reload(true);
 });
 
+const bigSquare = document.createElement('div');
+bigSquare.id = 'pixel-board';
+bigSquare.style.width = '230px';
+bigSquare.style.height = '230px';
+positionBody.appendChild(bigSquare);
+
 const positionSquare = document.getElementById('pixel-board');
 
 function createClassSquareHtmlCss() {
@@ -85,3 +87,16 @@ function createClassSquareHtmlCss() {
   }
 }
 createClassSquareHtmlCss();
+
+const elemento = document.getElementsByClassName('color')[0];
+elemento.classList.add('selected');
+
+function clickElemento(event) {
+  const selected = document.getElementsByClassName('selected')[0];
+  selected.classList.remove('selected');
+  event.target.classList.add('selected');
+}
+document.getElementsByClassName('color')[0].addEventListener('click', clickElemento);
+document.getElementsByClassName('color')[1].addEventListener('click', clickElemento);
+document.getElementsByClassName('color')[2].addEventListener('click', clickElemento);
+document.getElementsByClassName('color')[3].addEventListener('click', clickElemento);
