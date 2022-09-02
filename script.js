@@ -1,14 +1,16 @@
 const positionBody = document.body;
 
-function createHTML(tag, text, elemento) {
+function createHTML(tag, text, elemento, css) {
   const create = document.createElement(tag);
   positionBody.appendChild(create);
   create.innerText = text;
   create.id = elemento;
+  create.style.display = css;
 }
 createHTML('h1', 'Paleta de Cores', 'title');
-createHTML('id', '', 'color-palette');
-createHTML('button', 'Cores aleatórias', 'button-random-color');
+createHTML('id', '', 'color-palette', 'block');
+createHTML('button', 'Cores aleatórias', 'button-random-color', 'block');
+createHTML('button', 'Limpar', 'clear-board', 'block');
 
 const positionCreaterColor = document.getElementById('color-palette');
 
@@ -58,12 +60,13 @@ function returnCollor() {
 }
 returnCollor();
 
-let positionButton = document.querySelector('#button-random-color');
+let positionButtonRandomColor = document.querySelector('#button-random-color');
 
-positionButton.addEventListener('click', function newCollor() {
-    positionButton = localStorage.clear() 
-    window.location.reload(true);
-});
+function newCollor() {
+  positionButtonRandomColor = localStorage.clear();
+  window.location.reload(true);
+}
+positionButtonRandomColor.addEventListener('click', newCollor);
 
 const bigSquare = document.createElement('div');
 bigSquare.id = 'pixel-board';
@@ -98,17 +101,27 @@ function clickElemento(event) {
 }
 
 for (let index = 0; index < 4; index += 1) {
-  let collorSquare = document.getElementsByClassName('color')[index];
+  const collorSquare = document.getElementsByClassName('color')[index];
   collorSquare.addEventListener('click', clickElemento);
 }
 
 function paint(event) {
   const squareSelected = document.getElementsByClassName('selected')[0];
-  event.target.style.backgroundColor = squareSelected.style.backgroundColor;
+  const baz = event;
+  baz.target.style.backgroundColor = squareSelected.style.backgroundColor;
 }
 
 for (let index = 0; index < 25; index += 1) {
-  let square = document.getElementsByClassName('pixel')[index];
-
+  const square = document.getElementsByClassName('pixel')[index];
   square.addEventListener('click', paint);
 }
+
+const positionButtonClear = document.querySelector('#clear-board');
+
+function clear() {
+  for (let index = 0; index < 25; index += 1) {
+    const square = document.getElementsByClassName('pixel')[index];
+    square.style.backgroundColor = 'white';
+  }
+}
+positionButtonClear.addEventListener('click', clear);
