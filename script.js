@@ -96,7 +96,19 @@ function clickElemento(event) {
   selected.classList.remove('selected');
   event.target.classList.add('selected');
 }
-document.getElementsByClassName('color')[0].addEventListener('click', clickElemento);
-document.getElementsByClassName('color')[1].addEventListener('click', clickElemento);
-document.getElementsByClassName('color')[2].addEventListener('click', clickElemento);
-document.getElementsByClassName('color')[3].addEventListener('click', clickElemento);
+
+for (let index = 0; index < 4; index += 1) {
+  let collorSquare = document.getElementsByClassName('color')[index];
+  collorSquare.addEventListener('click', clickElemento);
+}
+
+function paint(event) {
+  const squareSelected = document.getElementsByClassName('selected')[0];
+  event.target.style.backgroundColor = squareSelected.style.backgroundColor;
+}
+
+for (let index = 0; index < 25; index += 1) {
+  let square = document.getElementsByClassName('pixel')[index];
+
+  square.addEventListener('click', paint);
+}
