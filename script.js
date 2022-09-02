@@ -5,10 +5,14 @@ function createHTML(tag, text, elemento) {
   positionBody.appendChild(create);
   create.innerText = text;
   create.id = elemento;
+  create.style.width = '230px';
+  create.style.height = '80px';
+
 }
 createHTML('h1', 'Paleta de Cores', 'title');
 createHTML('id', '', 'color-palette');
 createHTML('button', 'Cores aleatórias', 'button-random-color');
+createHTML('div', '', 'pixel-board');
 
 const positionCreaterColor = document.getElementById('color-palette');
 
@@ -22,21 +26,21 @@ function generateColor() {
   return color;
 }
 
-function createClass(tipo) {
+function createClassColorHtmlCss(tipo) {
   const create = document.createElement('class');
   positionCreaterColor.appendChild(create);
   create.className = tipo;
   create.style.border = 'solid black 1px';
-//   create.style.width = '80px';
-//   create.style.height = '80px';
-//   create.style.float = 'left';
-//   create.style.margin = '2px';
+  create.style.width = '80px';
+  create.style.height = '80px';
+  create.style.display = 'inLine-block';
+  create.style.margin = '2px';
 }
 
-createClass('color');
-createClass('color');
-createClass('color');
-createClass('color');
+createClassColorHtmlCss('color');
+createClassColorHtmlCss('color');
+createClassColorHtmlCss('color');
+createClassColorHtmlCss('color');
 
 const positionPaletteCores = document.getElementsByClassName('color');
 
@@ -60,69 +64,24 @@ returnCollor();
 
 let positionButton = document.querySelector('#button-random-color');
 
-positionButton.addEventListener('click', function () {
-    positionButton = localStorage.clear();
+positionButton.addEventListener('click', function newCollor() {
+    positionButton = localStorage.clear() 
     window.location.reload(true);
 });
 
+const positionSquare = document.getElementById('pixel-board');
 
-
-
-
-
-
-
-// const cores = ['collor1', 'collor2', 'collor3', 'collor4'];
-// const createColor = document.createElement('id');
-// createColor.id = 'color-palette';
-// positionBody.appendChild(createColor);
-// const positionCreaterColor = document.getElementById('color-palette');
-
-// function colorPalette() {
-//   for (let index = 0; index < cores.length; index += 1) {
-//     const square = document.createElement('class');
-//     square.className = 'color';
-//     if (index === 0) { square.style.backgroundColor = 'black';}
-//     else { square.style.backgroundColor = generateColor(); }
-
-//     positionCreaterColor.appendChild(square);
-//     square.style.border = 'solid black 1px';
-//     square.style.width = '80px';
-//     square.style.height = '80px';
-//     square.style.float = 'left';
-//     square.style.margin = '2px';
-//   }
-// }
-// colorPalette();
-
-// const positionPaletteCores = document.getElementsByClassName('color');
-
-// let storeData = ['black',
-//   positionPaletteCores[1].style.backgroundColor,
-//   positionPaletteCores[2].style.backgroundColor,
-//   positionPaletteCores[3].style.backgroundColor];
-// localStorage.setItem('colorPalette', JSON.stringify(storeData));
-
-// let returnData = JSON.parse(localStorage.getItem('colorPalette'));
-
-// function returnCollor() {
-//   positionPaletteCores[1].style.backgroundColor = returnData[1];
-//   positionPaletteCores[2].style.backgroundColor = returnData[2];
-//   positionPaletteCores[3].style.backgroundColor = returnData[3];
-// };
-
-// console.log(positionPaletteCores[1].style.backgroundColor)
-
-// function createButton() {
-//   const button = document.createElement('button');
-//   button.innerHTML = 'Cores aleatórias';
-//   button.id = 'button-random-color';
-//   positionBody.appendChild(button);
-// }
-// createButton();
-
-// const positionButton = document.querySelector('#button-random-color');
-
-// positionButton.addEventListener('click', function () { 
-//     positionPaletteCores.replace = colorPalette()
-// });
+function createClassSquareHtmlCss() {
+  for (let index = 0; index < 25; index += 1) {
+    const create = document.createElement('div');
+    positionSquare.appendChild(create);
+    create.classList = 'pixel';
+    create.style.border = 'solid black 1px';
+    create.style.backgroundColor = 'white';
+    create.style.width = '40px';
+    create.style.height = '40px';
+    create.style.display = 'inLine-block';
+    create.style.margin = '0px';
+  }
+}
+createClassSquareHtmlCss();
