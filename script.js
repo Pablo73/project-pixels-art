@@ -45,15 +45,14 @@ const positionPaletteCores = document.getElementsByClassName('color');
 const collor = ['black', generateColor(), generateColor(), generateColor()];
 
 function storeData() {
-  if (localStorage.length === 0) {
+  if (localStorage.colorPalette === undefined) {
     localStorage.setItem('colorPalette', JSON.stringify(collor));
   }
 }
 storeData();
 
-const returnData = JSON.parse(localStorage.getItem('colorPalette'));
-
 function returnCollor() {
+  const returnData = JSON.parse(localStorage.getItem('colorPalette'));
   for (let index = 0; index < 4; index += 1) {
     positionPaletteCores[index].style.backgroundColor = returnData[index];
   }
@@ -63,6 +62,7 @@ returnCollor();
 let positionButtonRandomColor = document.querySelector('#button-random-color');
 
 function newCollor() {
+
   positionButtonRandomColor = localStorage.clear();
   window.location.reload(true);
 }
@@ -120,8 +120,36 @@ const positionButtonClear = document.querySelector('#clear-board');
 
 function clear() {
   for (let index = 0; index < 25; index += 1) {
-    const square = document.getElementsByClassName('pixel')[index];
-    square.style.backgroundColor = 'white';
+    const squarePosition = document.getElementsByClassName('pixel')[index];
+    squarePosition.style.backgroundColor = 'white';
   }
 }
 positionButtonClear.addEventListener('click', clear);
+
+const color = [];
+
+function saveColor() {
+  color.length = 0;
+  for (let index = 0; index < 25; index += 1) {
+    const selectedColor = document.getElementsByClassName('pixel')[index].style.backgroundColor;
+    color.push(selectedColor);
+  }
+  localStorage.setItem('pixelBoard', JSON.stringify(color));
+}
+
+for (let index = 0; index < 25; index += 1) {
+  document.querySelectorAll('.pixel')[index].addEventListener('click', saveColor);
+}
+
+if (localStorage.pixelBoard === undefined) {
+  localStorage.setItem('pixelBoard', JSON.stringify(color));
+}
+
+const returnColor = JSON.parse(localStorage.getItem('pixelBoard'));
+
+function priCollor() {
+  for (let index = 0; index < 25; index += 1) {
+    document.getElementsByClassName('pixel')[index].style.backgroundColor = returnColor[index];
+  }
+}
+priCollor();
