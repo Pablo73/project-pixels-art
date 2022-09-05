@@ -144,13 +144,19 @@ function alterar() {
     const squarePosition = document.getElementsByClassName('pixel')[0];
     squarePosition.parentNode.removeChild(squarePosition);
   }
-  pixel = positionInput.value;
+  if (positionInput.value === '') {
+    alert('Board inválido!');
+  }
+  if (positionInput.value >= 50) {
+    positionInput.value = 50;
+  }
+  if (positionInput.value <= 5) {
+    positionInput.value = 5;
+  } else { pixel = positionInput.value;
+  }
   bigSquare.style.width = (pixel * 40) + (pixel * 2) + 'px';
   bigSquare.style.height = (pixel * 40) + (pixel * 2) + 'px';
   createClassSquareHtmlCss();
-  if (positionInput.value === '') {
-    alert('Board inválido!');
-  } else { clear(); }
 }
 document.getElementById('generate-board').addEventListener('click', alterar);
 
