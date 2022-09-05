@@ -7,10 +7,13 @@ function createHTML(tag, text, elemento, css) {
   create.id = elemento;
   create.style.display = css;
 }
+const cssInLineBlock = 'inLine-block';
 createHTML('h1', 'Paleta de Cores', 'title');
 createHTML('id', '', 'color-palette', 'block');
 createHTML('button', 'Cores aleatórias', 'button-random-color', 'block');
 createHTML('button', 'Limpar', 'clear-board', 'block');
+createHTML('input', '', 'board-size', cssInLineBlock);
+createHTML('button', 'VQV', 'generate-board', cssInLineBlock);
 
 const positionCreaterColor = document.getElementById('color-palette');
 
@@ -31,7 +34,7 @@ function createClassColorHtmlCss(tipo) {
   create.style.border = 'solid black 1px';
   create.style.width = '40px';
   create.style.height = '40px';
-  create.style.display = 'inLine-block';
+  create.style.display = cssInLineBlock;
   create.style.margin = '2px';
 }
 
@@ -62,22 +65,28 @@ returnCollor();
 let positionButtonRandomColor = document.querySelector('#button-random-color');
 
 function newCollor() {
-
   positionButtonRandomColor = localStorage.clear();
   window.location.reload(true);
 }
 positionButtonRandomColor.addEventListener('click', newCollor);
 
+let pixel = 5;
+
 const bigSquare = document.createElement('div');
 bigSquare.id = 'pixel-board';
-bigSquare.style.width = '230px';
-bigSquare.style.height = '230px';
+bigSquare.style.width = '210px';
+bigSquare.style.height = '210px';
 positionBody.appendChild(bigSquare);
 
 const positionSquare = document.getElementById('pixel-board');
 
+// const tamanhoBigWidth = bigSquare.style.width;
+// const tamanhoBigHeight = bigSquare.style.height;
+// const tamnhaoWidth = tamanhoBigWidth.substring(0, 3);
+// const tamnhaoHeigth = tamanhoBigHeight.substring(0, 3);
+
 function createClassSquareHtmlCss() {
-  for (let index = 0; index < 25; index += 1) {
+  for (let index = 0; index < pixel ** 2; index += 1) {
     const create = document.createElement('div');
     positionSquare.appendChild(create);
     create.classList = 'pixel';
@@ -85,7 +94,7 @@ function createClassSquareHtmlCss() {
     create.style.backgroundColor = 'white';
     create.style.width = '40px';
     create.style.height = '40px';
-    create.style.display = 'inLine-block';
+    create.style.display = cssInLineBlock;
     create.style.margin = '0px';
   }
 }
@@ -111,7 +120,7 @@ function paint(event) {
   baz.target.style.backgroundColor = squareSelected.style.backgroundColor;
 }
 
-for (let index = 0; index < 25; index += 1) {
+for (let index = 0; index < pixel ** 2; index += 1) {
   const square = document.getElementsByClassName('pixel')[index];
   square.addEventListener('click', paint);
 }
@@ -119,25 +128,44 @@ for (let index = 0; index < 25; index += 1) {
 const positionButtonClear = document.querySelector('#clear-board');
 
 function clear() {
-  for (let index = 0; index < 25; index += 1) {
+  for (let index = 0; index < pixel ** 2; index += 1) {
     const squarePosition = document.getElementsByClassName('pixel')[index];
     squarePosition.style.backgroundColor = 'white';
   }
 }
 positionButtonClear.addEventListener('click', clear);
 
+const positionInput = document.querySelector('#board-size');
+positionInput.type = 'number';
+positionInput.min = '1';
+
+function alterar() {
+  for (let index = 0; index < pixel ** 2; index += 1) {
+    const squarePosition = document.getElementsByClassName('pixel')[0];
+    squarePosition.parentNode.removeChild(squarePosition);
+  }
+  pixel = positionInput.value;
+  bigSquare.style.width = (pixel * 40) + (pixel * 2) + 'px';
+  bigSquare.style.height = (pixel * 40) + (pixel * 2) + 'px';
+  createClassSquareHtmlCss();
+  if (positionInput.value === '') {
+    alert('Board inválido!');
+  } else { clear(); }
+}
+document.getElementById('generate-board').addEventListener('click', alterar);
+
 const color = [];
 
 function saveColor() {
   color.length = 0;
-  for (let index = 0; index < 25; index += 1) {
+  for (let index = 0; index < pixel ** 2; index += 1) {
     const selectedColor = document.getElementsByClassName('pixel')[index].style.backgroundColor;
     color.push(selectedColor);
   }
   localStorage.setItem('pixelBoard', JSON.stringify(color));
 }
 
-for (let index = 0; index < 25; index += 1) {
+for (let index = 0; index < pixel ** 2; index += 1) {
   document.querySelectorAll('.pixel')[index].addEventListener('click', saveColor);
 }
 
@@ -148,7 +176,7 @@ if (localStorage.pixelBoard === undefined) {
 const returnColor = JSON.parse(localStorage.getItem('pixelBoard'));
 
 function priCollor() {
-  for (let index = 0; index < 25; index += 1) {
+  for (let index = 0; index < pixel ** 2; index += 1) {
     document.getElementsByClassName('pixel')[index].style.backgroundColor = returnColor[index];
   }
 }
